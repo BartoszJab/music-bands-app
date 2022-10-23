@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.musicbandsapp.di.appModule
+import com.example.musicbandsapp.navigation.AppNavHost
 import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
-import com.example.musicbandsapp.view.MainView
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MusicBandsAppTheme {
-                MainView()
+                AppNavHost()
             }
         }
     }
