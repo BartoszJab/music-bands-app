@@ -11,7 +11,7 @@ data class Band(
     val formYear: String,
     val members: List<String>,
     val albums: List<Album>,
-    val bandImage: String,
-    val logoImage: String,
-    val reference: List<Reference>
+    val bandImage: String?,
+    val logoImage: String?,
+    val reference: Reference
 )
