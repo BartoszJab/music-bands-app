@@ -8,20 +8,22 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import com.example.musicbandsapp.navigation.Screen
 import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
 import com.example.musicbandsapp.view.composable.RowItem
 import com.example.musicbandsapp.viewmodel.BandsViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun MainView(bandsViewModel: BandsViewModel = getViewModel()) {
+fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getViewModel()) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(items = bandsViewModel.bands, key = { it.id }) {
             RowItem(
                 band = it,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable { }
+                    .clickable { navController.navigate("${Screen.DetailsScreen.route}/${it.id}") }
             )
 
             Divider()
@@ -33,6 +35,6 @@ fun MainView(bandsViewModel: BandsViewModel = getViewModel()) {
 @Composable
 fun MainViewPreview() {
     MusicBandsAppTheme {
-        MainView()
+//        MainView()
     }
 }
