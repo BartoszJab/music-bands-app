@@ -2,6 +2,10 @@ buildscript {
     ext {
         compose_ui_version = '1.2.1'
         ktor_version = '2.1.2'
+        koin_version= "3.2.2"
+        koin_android_version= "3.2.3"
+        koin_android_compose_version= "3.2.2"
+        koin_ktor= "3.2.2"
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
