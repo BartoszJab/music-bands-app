@@ -1,11 +1,15 @@
 package com.example.musicbandsapp.view
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -13,20 +17,34 @@ import com.example.musicbandsapp.navigation.Screen
 import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
 import com.example.musicbandsapp.view.composable.RowItem
 import com.example.musicbandsapp.viewmodel.BandsViewModel
+import com.example.musicbandsapp.viewmodel.State
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getViewModel()) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(items = bandsViewModel.bands, key = { it.id }) {
-            RowItem(
-                band = it,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable { navController.navigate("${Screen.DetailsScreen.route}/${it.id}") }
-            )
+    when (bandsViewModel.state) {
+        is State.LoadingState -> {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        is State.DataState -> {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(items = bandsViewModel.bands, key = { it.id }) {
+                    RowItem(
+                        band = it,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable { navController.navigate("${Screen.DetailsScreen.route}/${it.id}") }
+                    )
 
-            Divider()
+                    Divider()
+                }
+            }
         }
     }
 }

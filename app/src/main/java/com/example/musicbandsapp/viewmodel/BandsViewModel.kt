@@ -9,11 +9,25 @@ import com.example.musicbandsapp.api.BandsService
 import com.example.musicbandsapp.model.Band
 import kotlinx.coroutines.launch
 
-class BandsViewModel(private val bandsService: BandsService): ViewModel() {
+class BandsViewModel(private val bandsService: BandsService) : ViewModel() {
 
     var bands by mutableStateOf<List<Band>>(emptyList())
+    var state by mutableStateOf<State>(State.LoadingState)
 
-    fun getBands() = viewModelScope.launch {
-        bands = bandsService.getBands()
+    init {
+        if (bands.isEmpty()) {
+            getBands()
+        }
     }
+
+    private fun getBands() = viewModelScope.launch {
+        bands = bandsService.getBands()
+
+        if (bands.isNotEmpty()) state = State.DataState(bands)
+    }
+}
+
+sealed class State {
+    object LoadingState : State()
+    data class DataState(val data: List<Band>) : State()
 }
