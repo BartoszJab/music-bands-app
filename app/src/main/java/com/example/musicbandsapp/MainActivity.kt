@@ -3,6 +3,7 @@ package com.example.musicbandsapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.musicbandsapp.di.appModule
 import com.example.musicbandsapp.navigation.AppNavHost
 import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
@@ -20,6 +21,8 @@ class MainActivity : ComponentActivity() {
             androidContext(this@MainActivity)
             modules(appModule)
         }
+
+        installSplashScreen()
 
         setContent {
             MusicBandsAppTheme {
