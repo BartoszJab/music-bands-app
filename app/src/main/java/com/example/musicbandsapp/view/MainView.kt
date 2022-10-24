@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.musicbandsapp.navigation.Screen
 import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
@@ -33,18 +33,29 @@ fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getV
             }
         }
         is State.DataState -> {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(items = bandsViewModel.bands, key = { it.id }) {
-                    RowItem(
-                        band = it,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable { navController.navigate("${Screen.DetailsScreen.route}/${it.id}") }
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = { Text("Bands") },
+                        elevation = 10.dp
                     )
-
-                    Divider()
                 }
+            ) {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(items = bandsViewModel.bands, key = { it.id }) {
+                        RowItem(
+                            band = it,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clickable { navController.navigate("${Screen.DetailsScreen.route}/${it.id}") }
+                        )
+
+                        Divider()
+                    }
+                }
+
             }
+
         }
     }
 }

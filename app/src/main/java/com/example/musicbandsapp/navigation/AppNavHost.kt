@@ -30,7 +30,8 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         ) {
             DetailsView(
                 itemId = it.arguments?.getLong("id") ?: -1,
-                bandsViewModel = bandsViewModel
+                bandsViewModel = bandsViewModel,
+                navController = navController
             )
         }
     }
