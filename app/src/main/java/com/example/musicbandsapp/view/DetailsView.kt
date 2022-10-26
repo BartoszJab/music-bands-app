@@ -1,30 +1,32 @@
 package com.example.musicbandsapp.view
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.musicbandsapp.R
 import com.example.musicbandsapp.model.Band
+import com.example.musicbandsapp.view.composable.ReferenceComposable
 import com.example.musicbandsapp.viewmodel.BandsViewModel
 
 @Composable
 fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: NavController) {
 
     val selectedBand: Band? = bandsViewModel.bands.find { it.id == itemId }
+    val state = rememberScrollState()
+    val context = LocalContext.current
 
     selectedBand?.let { band ->
         Scaffold(
@@ -44,6 +46,7 @@ fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: Nav
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
+                    .verticalScroll(state)
             ) {
                 AsyncImage(
                     model = band.bandImage,
@@ -57,23 +60,31 @@ fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: Nav
 
                 Spacer(Modifier.height(8.dp))
 
-                Text("Albums", style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold))
-                LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                    items(band.albums) {
-                        Box(modifier = Modifier.border(1.dp, Color.Black)) {
-                            Column(modifier = Modifier.padding(8.dp)) {
-                                Text(it.name)
-                                Text(it.releaseDate)
-                            }
-                        }
-                    }
-                }
-
                 Text("Reference", style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold))
-                Column(Modifier.fillMaxWidth()) {
-                    Text(band.reference.spotify ?: "")
-                    Text(band.reference.appleMusic ?: "")
-                    Text(band.reference.youtube ?: "")
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row {
+                        ReferenceComposable(
+                            resourceId = R.drawable.apple_music_logo,
+                            description = "Apple music",
+                            onClick = { }
+                        )
+
+                        ReferenceComposable(
+                            resourceId = R.drawable.spotify_logo,
+                            description = "Spotify",
+                            onClick = { }
+                        )
+                    }
+
+                    ReferenceComposable(
+                        resourceId = R.drawable.yt_logo,
+                        description = "Youtube",
+                        onClick = { }
+                    )
                 }
             }
         }
