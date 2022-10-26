@@ -21,7 +21,8 @@ class BandsViewModel(private val bandsService: BandsService) : ViewModel() {
         }
     }
 
-    private fun getBands() = viewModelScope.launch {
+    fun getBands() = viewModelScope.launch {
+        state = Resource.Loading()
         state = bandsService.getBands()
     }
 
