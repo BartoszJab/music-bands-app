@@ -30,7 +30,7 @@ fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getV
 
     when (state) {
         is Resource.Error -> {
-
+            state.message?.let { ErrorView(message = it, onClick = bandsViewModel::getBands) }
         }
         is Resource.Loading -> LoadingView()
         is Resource.Success -> {
