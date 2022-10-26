@@ -16,10 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.musicbandsapp.R
 import com.example.musicbandsapp.model.Band
-import com.example.musicbandsapp.util.openReference
-import com.example.musicbandsapp.view.composable.Reference
+import com.example.musicbandsapp.view.composable.References
 import com.example.musicbandsapp.viewmodel.BandsViewModel
 
 @Composable
@@ -63,31 +61,7 @@ fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: Nav
                 Spacer(Modifier.height(8.dp))
 
                 Text("Reference", style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold))
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row {
-                        Reference(
-                            resourceId = R.drawable.apple_music_logo,
-                            description = "Apple music",
-                            onClick = { openReference(context, band.reference.appleMusic ?: "") }
-                        )
-
-                        Reference(
-                            resourceId = R.drawable.spotify_logo,
-                            description = "Spotify",
-                            onClick = { openReference(context, band.reference.spotify ?: "") }
-                        )
-                    }
-
-                    Reference(
-                        resourceId = R.drawable.yt_logo,
-                        description = "Youtube",
-                        onClick = { openReference(context, band.reference.youtube ?: "") }
-                    )
-                }
+                References(context = context, reference = band.reference)
             }
         }
 
