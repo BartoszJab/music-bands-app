@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -52,7 +53,7 @@ fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: Nav
                     contentDescription = "Band image",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.4f)
+                        .height((LocalConfiguration.current.screenHeightDp * 0.3).dp)
                 )
 
                 Text("Members", style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold))
