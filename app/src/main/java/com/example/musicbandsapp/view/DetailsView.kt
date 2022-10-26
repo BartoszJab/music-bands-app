@@ -18,7 +18,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.musicbandsapp.R
 import com.example.musicbandsapp.model.Band
-import com.example.musicbandsapp.view.composable.ReferenceComposable
+import com.example.musicbandsapp.util.openReference
+import com.example.musicbandsapp.view.composable.Reference
 import com.example.musicbandsapp.viewmodel.BandsViewModel
 
 @Composable
@@ -55,6 +56,7 @@ fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: Nav
                         .fillMaxWidth()
                         .fillMaxHeight(0.4f)
                 )
+
                 Text("Members", style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold))
                 Text(band.members.joinToString(", "))
 
@@ -67,23 +69,23 @@ fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: Nav
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row {
-                        ReferenceComposable(
+                        Reference(
                             resourceId = R.drawable.apple_music_logo,
                             description = "Apple music",
-                            onClick = { }
+                            onClick = { openReference(context, band.reference.appleMusic ?: "") }
                         )
 
-                        ReferenceComposable(
+                        Reference(
                             resourceId = R.drawable.spotify_logo,
                             description = "Spotify",
-                            onClick = { }
+                            onClick = { openReference(context, band.reference.spotify ?: "") }
                         )
                     }
 
-                    ReferenceComposable(
+                    Reference(
                         resourceId = R.drawable.yt_logo,
                         description = "Youtube",
-                        onClick = { }
+                        onClick = { openReference(context, band.reference.youtube ?: "") }
                     )
                 }
             }

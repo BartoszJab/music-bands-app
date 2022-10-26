@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ReferenceComposable(
+fun Reference(
     @DrawableRes resourceId: Int,
     description: String,
     onClick: () -> Unit
