@@ -7,7 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -19,61 +19,76 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.musicbandsapp.model.Band
+import com.example.musicbandsapp.util.Resource
 import com.example.musicbandsapp.view.composable.References
-import com.example.musicbandsapp.viewmodel.BandsViewModel
+import com.example.musicbandsapp.viewmodel.DetailsViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun DetailsView(itemId: Long, bandsViewModel: BandsViewModel, navController: NavController) {
+fun DetailsView(
+    itemId: Long,
+    navController: NavController,
+    detailsViewModel: DetailsViewModel = getViewModel()
+) {
 
-    val selectedBand: Band? = bandsViewModel.bands.find { it.id == itemId }
-    val state = rememberScrollState()
+    val bandInfo = produceState<Resource<Band>>(initialValue = Resource.Loading()) {
+        value = detailsViewModel.getBandDetails(itemId)
+    }.value
+
+    val scrollState = rememberScrollState()
     val context = LocalContext.current
 
-    selectedBand?.let { band ->
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = band.name) },
-                    navigationIcon = {
-                        IconButton(onClick = navController::popBackStack) {
-                            Icon(Icons.Filled.ArrowBack, "Back icon")
-                        }
-                    },
-                    elevation = 10.dp
-                )
-            }
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(state)
-            ) {
-                AsyncImage(
-                    model = band.bandImage,
-                    contentDescription = "Band image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height((LocalConfiguration.current.screenHeightDp * 0.3).dp)
-                )
+    when (bandInfo) {
+        is Resource.Error -> {
 
-                Text("Members", style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold))
-                Text(band.members.joinToString(", "))
-
-                Spacer(Modifier.height(8.dp))
-
-                Text("Reference", style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold))
-                References(context = context, reference = band.reference)
-            }
         }
+        is Resource.Loading -> LoadingView()
+        is Resource.Success -> {
+            bandInfo.data?.let { band ->
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text(text = band.name) },
+                            navigationIcon = {
+                                IconButton(onClick = navController::popBackStack) {
+                                    Icon(Icons.Filled.ArrowBack, "Back icon")
+                                }
+                            },
+                            elevation = 10.dp
+                        )
+                    }
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                            .verticalScroll(scrollState)
+                    ) {
+                        AsyncImage(
+                            model = band.bandImage,
+                            contentDescription = "Band image",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height((LocalConfiguration.current.screenHeightDp * 0.3).dp)
+                        )
 
-    } ?: run {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Something went wrong", style = MaterialTheme.typography.h5)
+                        Text(
+                            "Members",
+                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        )
+                        Text(band.members.joinToString(", "))
+
+                        Spacer(Modifier.height(8.dp))
+
+                        Text(
+                            "Reference",
+                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        )
+                        References(context = context, reference = band.reference)
+                    }
+                }
+            }
         }
     }
 }

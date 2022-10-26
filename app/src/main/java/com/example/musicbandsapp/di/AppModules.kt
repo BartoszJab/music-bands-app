@@ -2,6 +2,7 @@ package com.example.musicbandsapp.di
 
 import com.example.musicbandsapp.api.BandsService
 import com.example.musicbandsapp.viewmodel.BandsViewModel
+import com.example.musicbandsapp.viewmodel.DetailsViewModel
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -20,4 +21,6 @@ val appModule = module {
     }
 
     viewModel { BandsViewModel(get()) }
+
+    viewModel { DetailsViewModel(get()) }
 }
