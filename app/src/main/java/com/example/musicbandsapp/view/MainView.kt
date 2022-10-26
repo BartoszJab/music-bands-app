@@ -18,6 +18,8 @@ import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
 import com.example.musicbandsapp.view.composable.RowItem
 import com.example.musicbandsapp.viewmodel.BandsViewModel
 import com.example.musicbandsapp.viewmodel.State
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -41,21 +43,24 @@ fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getV
                     )
                 }
             ) {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(items = bandsViewModel.bands, key = { it.id }) {
-                        RowItem(
-                            band = it,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clickable { navController.navigate("${Screen.DetailsScreen.route}/${it.id}") }
-                        )
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(isRefreshing = bandsViewModel.isRefreshing),
+                    onRefresh = { bandsViewModel.refresh() }
+                ) {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(items = bandsViewModel.bands, key = { it.id }) {
+                            RowItem(
+                                band = it,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable { navController.navigate("${Screen.DetailsScreen.route}/${it.id}") }
+                            )
 
-                        Divider()
+                            Divider()
+                        }
                     }
                 }
-
             }
-
         }
     }
 }

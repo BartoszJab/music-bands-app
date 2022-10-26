@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class BandsViewModel(private val bandsService: BandsService) : ViewModel() {
 
     var bands by mutableStateOf<List<Band>>(emptyList())
+    var isRefreshing by mutableStateOf(false)
     var state by mutableStateOf<State>(State.LoadingState)
 
     init {
@@ -24,6 +25,12 @@ class BandsViewModel(private val bandsService: BandsService) : ViewModel() {
         bands = bandsService.getBands()
 
         if (bands.isNotEmpty()) state = State.DataState(bands)
+    }
+
+    fun refresh() = viewModelScope.launch {
+        isRefreshing = true
+        bands = bandsService.getBands()
+        isRefreshing = false
     }
 }
 
