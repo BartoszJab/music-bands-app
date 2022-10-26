@@ -7,7 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.musicbandsapp.model.Band
 import com.example.musicbandsapp.util.Resource
 import com.example.musicbandsapp.view.composable.References
 import com.example.musicbandsapp.viewmodel.DetailsViewModel
@@ -31,20 +30,27 @@ fun DetailsView(
     detailsViewModel: DetailsViewModel = getViewModel()
 ) {
 
-    val bandInfo = produceState<Resource<Band>>(initialValue = Resource.Loading()) {
-        value = detailsViewModel.getBandDetails(itemId)
-    }.value
+    LaunchedEffect(Unit) {
+        detailsViewModel.getBandDetails(itemId)
+    }
 
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
-    when (bandInfo) {
-        is Resource.Error -> {
+    @Suppress("MoveVariableDeclarationIntoWhen")
+    val state = detailsViewModel.state
 
+    when (state) {
+        is Resource.Error -> {
+            state.message?.let {
+                ErrorView(
+                    message = it,
+                    onClick = { detailsViewModel.getBandDetails(itemId) })
+            }
         }
         is Resource.Loading -> LoadingView()
         is Resource.Success -> {
-            bandInfo.data?.let { band ->
+            state.data?.let { band ->
                 Scaffold(
                     topBar = {
                         TopAppBar(
