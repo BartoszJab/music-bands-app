@@ -1,6 +1,9 @@
 package com.example.musicbandsapp.di
 
+import androidx.room.Room
 import com.example.musicbandsapp.api.BandsService
+import com.example.musicbandsapp.db.BandsDatabase
+import com.example.musicbandsapp.repository.BandsRepositoryImpl
 import com.example.musicbandsapp.viewmodel.BandsViewModel
 import com.example.musicbandsapp.viewmodel.DetailsViewModel
 import io.ktor.client.*
@@ -18,6 +21,22 @@ val appModule = module {
             install(Logging)
             install(ContentNegotiation) { json() }
         })
+    }
+
+    single {
+        BandsRepositoryImpl(get())
+    }
+
+    single {
+        Room.databaseBuilder(
+            get(),
+            BandsDatabase::class.java, "bands-db"
+        ).build()
+    }
+
+    single {
+        val database: BandsDatabase = get()
+        database.getBandsDao()
     }
 
     viewModel { BandsViewModel(get()) }
