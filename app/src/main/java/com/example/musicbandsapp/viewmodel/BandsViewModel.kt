@@ -14,6 +14,7 @@ class BandsViewModel(private val bandsRepositoryImpl: BandsRepositoryImpl) : Vie
 
     var isRefreshing by mutableStateOf(false)
     var state by mutableStateOf<Resource<List<Band>>>(Resource.Loading(emptyList()))
+    var showSnackbar by mutableStateOf(false)
 
     init {
         if (state is Resource.Loading) {
@@ -23,12 +24,17 @@ class BandsViewModel(private val bandsRepositoryImpl: BandsRepositoryImpl) : Vie
 
     fun getBands() = viewModelScope.launch {
         state = Resource.Loading()
-        state = bandsRepositoryImpl.getBands()
+        state = bandsRepositoryImpl.getBands(false)
     }
 
     fun refresh() = viewModelScope.launch {
         isRefreshing = true
-        state = bandsRepositoryImpl.getBands()
+
+        when (val resource = bandsRepositoryImpl.getBands(true)) {
+            is Resource.Error -> showSnackbar = true
+            else -> state = resource
+        }
+
         isRefreshing = false
     }
 }
