@@ -43,9 +43,9 @@ fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getV
 
                     when (result) {
                         SnackbarResult.Dismissed -> bandsViewModel.showSnackbar = false
-                        SnackbarResult.ActionPerformed -> {
-                            bandsViewModel.showSnackbar = false
-                            bandsViewModel.refresh()
+                        SnackbarResult.ActionPerformed -> bandsViewModel.apply {
+                            showSnackbar = false
+                            refresh()
                         }
                     }
                 }
