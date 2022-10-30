@@ -2,6 +2,7 @@ package com.example.musicbandsapp.db
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.musicbandsapp.model.Band
 
@@ -14,6 +15,6 @@ interface BandsDao {
     @Query("SELECT * FROM band WHERE id = :id")
     suspend fun findById(id: Long): Band
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     suspend fun insertAll(bands: List<Band>)
 }
