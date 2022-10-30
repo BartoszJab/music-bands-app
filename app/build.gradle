@@ -61,6 +61,10 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation "com.google.accompanist:accompanist-swiperefresh:0.25.0"
 
+    // ROOM DATABASE
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
     // KTOR
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-android:$ktor_version"

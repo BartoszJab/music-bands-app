@@ -1,10 +1,13 @@
 package com.example.musicbandsapp.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
+@Entity
 @Serializable
 data class Band(
-    val id: Long,
+    @PrimaryKey val id: Long,
     val name: String,
     val origin: String,
     val genre: List<String>,
