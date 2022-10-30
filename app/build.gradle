@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.20'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -60,10 +61,12 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:2.5.3"
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation "com.google.accompanist:accompanist-swiperefresh:0.25.0"
+    implementation 'com.google.code.gson:gson:2.10'
 
     // ROOM DATABASE
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
     // KTOR
     implementation "io.ktor:ktor-client-core:$ktor_version"

@@ -2,15 +2,16 @@ package com.example.musicbandsapp.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.musicbandsapp.model.Album
+import androidx.room.TypeConverters
 import com.example.musicbandsapp.model.Band
-import com.example.musicbandsapp.model.Reference
+import org.koin.core.component.KoinComponent
 
 @Database(
-    entities = [Band::class, Album::class, Reference::class],
+    entities = [Band::class],
     version = 1
 )
 
-abstract class BandsDatabase: RoomDatabase() {
+@TypeConverters(Converters::class)
+abstract class BandsDatabase : RoomDatabase(), KoinComponent {
     abstract fun getBandsDao(): BandsDao
 }
