@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.example.musicbandsapp.util.Resource
+import com.example.musicbandsapp.view.composable.AsyncCachedImage
 import com.example.musicbandsapp.view.composable.References
 import com.example.musicbandsapp.viewmodel.DetailsViewModel
 import org.koin.androidx.compose.getViewModel
@@ -45,7 +45,8 @@ fun DetailsView(
             state.message?.let {
                 ErrorView(
                     message = it,
-                    onClick = { detailsViewModel.getBandDetails(itemId) })
+                    onClick = { detailsViewModel.getBandDetails(itemId) }
+                )
             }
         }
         is Resource.Loading -> LoadingView()
@@ -70,7 +71,7 @@ fun DetailsView(
                             .padding(16.dp)
                             .verticalScroll(scrollState)
                     ) {
-                        AsyncImage(
+                        AsyncCachedImage(
                             model = band.bandImage,
                             contentDescription = "Band image",
                             contentScale = ContentScale.Crop,

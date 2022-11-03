@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.example.musicbandsapp.model.Band
 import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
 
@@ -23,7 +22,7 @@ fun RowItem(band: Band, modifier: Modifier = Modifier) {
         Row(
             modifier = Modifier.padding(16.dp)
         ) {
-            AsyncImage(
+            AsyncCachedImage(
                 model = band.logoImage ?: band.bandImage,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
