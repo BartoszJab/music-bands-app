@@ -41,59 +41,55 @@ fun DetailsView(
     val state = detailsViewModel.state
 
     when (state) {
-        is Resource.Error -> {
-            state.message?.let {
-                ErrorView(
-                    message = it,
-                    onClick = { detailsViewModel.getBandDetails(itemId) }
-                )
-            }
+        is Resource.Error -> state.message?.let {
+            ErrorView(
+                message = it,
+                onClick = { detailsViewModel.getBandDetails(itemId) }
+            )
         }
         is Resource.Loading -> LoadingView()
-        is Resource.Success -> {
-            state.data?.let { band ->
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            title = { Text(text = band.name) },
-                            navigationIcon = {
-                                IconButton(onClick = navController::popBackStack) {
-                                    Icon(Icons.Filled.ArrowBack, "Back icon")
-                                }
-                            },
-                            elevation = 10.dp
-                        )
-                    }
+        is Resource.Success -> state.data?.let { band ->
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = { Text(text = band.name) },
+                        navigationIcon = {
+                            IconButton(onClick = navController::popBackStack) {
+                                Icon(Icons.Filled.ArrowBack, "Back icon")
+                            }
+                        },
+                        elevation = 10.dp
+                    )
+                }
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .verticalScroll(scrollState)
                 ) {
-                    Column(
+                    AsyncCachedImage(
+                        model = band.bandImage,
+                        contentDescription = "Band image",
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                            .verticalScroll(scrollState)
-                    ) {
-                        AsyncCachedImage(
-                            model = band.bandImage,
-                            contentDescription = "Band image",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height((LocalConfiguration.current.screenHeightDp * 0.3).dp)
-                        )
+                            .fillMaxWidth()
+                            .height((LocalConfiguration.current.screenHeightDp * 0.3).dp)
+                    )
 
-                        Text(
-                            "Members",
-                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                        )
-                        Text(band.members.joinToString(", "))
+                    Text(
+                        "Members",
+                        style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    )
+                    Text(band.members.joinToString(", "))
 
-                        Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(8.dp))
 
-                        Text(
-                            "Reference",
-                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                        )
-                        References(context = context, reference = band.reference)
-                    }
+                    Text(
+                        "Reference",
+                        style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    )
+                    References(context = context, reference = band.reference)
                 }
             }
         }
