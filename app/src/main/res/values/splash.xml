@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.AppCompat.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#202020</item>
+        <item name="windowSplashScreenBackground">#3949ab</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon</item>
         <item name="postSplashScreenTheme">@style/Theme.MusicBandsApp</item>
     </style>
