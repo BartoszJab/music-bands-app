@@ -2,6 +2,7 @@ package com.example.musicbandsapp.view.composable
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,17 +19,15 @@ import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
 
 @Composable
 fun RowItem(band: Band, modifier: Modifier = Modifier) {
-    Box(modifier = modifier) {
-        Row(
-            modifier = Modifier.padding(16.dp)
-        ) {
+    Card(shape = RoundedCornerShape(10.dp), modifier = modifier) {
+        Row(Modifier.padding(8.dp)) {
             AsyncCachedImage(
                 model = band.logoImage ?: band.bandImage,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(74.dp)
-                    .clip(RoundedCornerShape(percent = 50)),
+                    .size(84.dp)
+                    .clip(RoundedCornerShape(percent = 50))
             )
 
             Spacer(modifier = Modifier.width(8.dp))
