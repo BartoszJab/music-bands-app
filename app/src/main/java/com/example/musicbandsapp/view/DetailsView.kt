@@ -6,8 +6,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -18,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.musicbandsapp.util.Resource
+import com.example.musicbandsapp.view.composable.AlbumsDialog
 import com.example.musicbandsapp.view.composable.AsyncCachedImage
 import com.example.musicbandsapp.view.composable.References
 import com.example.musicbandsapp.viewmodel.DetailsViewModel
@@ -36,9 +36,16 @@ fun DetailsView(
 
     val scrollState = rememberScrollState()
     val context = LocalContext.current
+    var showAlbumsDialog by remember { mutableStateOf(false) }
 
     @Suppress("MoveVariableDeclarationIntoWhen")
     val state = detailsViewModel.state
+
+    if (showAlbumsDialog) {
+        detailsViewModel.state.data?.albums?.let {
+            AlbumsDialog(albums = it, onDismissRequest = { showAlbumsDialog = false })
+        }
+    }
 
     when (state) {
         is Resource.Error -> state.message?.let {
@@ -82,6 +89,10 @@ fun DetailsView(
                         style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
                     )
                     Text(band.members.joinToString(", "))
+
+                    TextButton(onClick = { showAlbumsDialog = true }) {
+                        Text("Albums")
+                    }
 
                     Spacer(Modifier.height(8.dp))
 
