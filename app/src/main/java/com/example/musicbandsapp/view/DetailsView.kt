@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.musicbandsapp.util.Resource
+import com.example.musicbandsapp.view.composable.AlbumsButton
 import com.example.musicbandsapp.view.composable.AlbumsDialog
 import com.example.musicbandsapp.view.composable.AsyncCachedImage
 import com.example.musicbandsapp.view.composable.References
@@ -90,17 +91,17 @@ fun DetailsView(
                     )
                     Text(band.members.joinToString(", "))
 
-                    TextButton(onClick = { showAlbumsDialog = true }) {
-                        Text("Albums")
-                    }
-
                     Spacer(Modifier.height(8.dp))
+
+                    AlbumsButton { showAlbumsDialog = true }
 
                     Text(
                         "Reference",
                         style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
                     )
                     References(context = context, reference = band.reference)
+
+
                 }
             }
         }
