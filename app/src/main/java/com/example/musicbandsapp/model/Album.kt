@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class Album(
     val name: String,
     val releaseDate: String,
-    val coverImage: String?
+    val coverImage: String? = null
 )
