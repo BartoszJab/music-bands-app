@@ -39,8 +39,8 @@ fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getV
             if (bandsViewModel.showSnackbar) {
                 LaunchedEffect(scaffoldState.snackbarHostState) {
                     val result = scaffoldState.snackbarHostState.showSnackbar(
-                        message = "You're offline",
-                        actionLabel = "Try to connect"
+                        message = "Something went wrong",
+                        actionLabel = "Try again"
                     )
 
                     when (result) {
