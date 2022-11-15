@@ -19,17 +19,6 @@ class BandsService(
         }
     }
 
-    suspend fun getBandDetails(id: Long): Resource<Band> {
-        return try {
-            val data: List<Band> = client.get(URL).body()
-            val band: Band = data.find { it.id == id }!!
-
-            Resource.Success(band)
-        } catch (e: Exception) {
-            Resource.Error("Could not get details of the band")
-        }
-    }
-
     companion object {
         private const val URL = "https://drive.google.com/uc?id=1uxC7jvDGFzDJoNj_zzIGm248fIGEn0fr"
     }
