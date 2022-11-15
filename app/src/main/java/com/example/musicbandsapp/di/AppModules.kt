@@ -18,11 +18,14 @@ import org.koin.dsl.module
 
 val appModule = module {
     single {
-        BandsService(client = HttpClient(Android) {
-            expectSuccess = true
-            install(Logging)
-            install(ContentNegotiation) { json() }
-        })
+        BandsService(
+            client = HttpClient(Android) {
+                expectSuccess = true
+                install(Logging)
+                install(ContentNegotiation) { json() }
+            },
+            context = androidContext()
+        )
     }
 
     single {

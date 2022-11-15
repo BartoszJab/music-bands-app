@@ -1,6 +1,6 @@
 package com.example.musicbandsapp.api
 
-import android.content.res.Resources
+import android.content.Context
 import com.example.musicbandsapp.R
 import com.example.musicbandsapp.model.Band
 import com.example.musicbandsapp.util.Resource
@@ -9,7 +9,8 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 
 class BandsService(
-    private val client: HttpClient
+    private val client: HttpClient,
+    private val context: Context
 ) {
 
     suspend fun getBands(): Resource<List<Band>> {
@@ -17,7 +18,7 @@ class BandsService(
             val data: List<Band> = client.get(URL).body()
             Resource.Success(data)
         } catch (e: Exception) {
-            Resource.Error(Resources.getSystem().getString(R.string.error_occurred))
+            Resource.Error(context.getString(R.string.error_occurred))
         }
     }
 
