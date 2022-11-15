@@ -1,5 +1,7 @@
 package com.example.musicbandsapp.api
 
+import android.content.res.Resources
+import com.example.musicbandsapp.R
 import com.example.musicbandsapp.model.Band
 import com.example.musicbandsapp.util.Resource
 import io.ktor.client.*
@@ -15,7 +17,7 @@ class BandsService(
             val data: List<Band> = client.get(URL).body()
             Resource.Success(data)
         } catch (e: Exception) {
-            Resource.Error("An error occurred")
+            Resource.Error(Resources.getSystem().getString(R.string.error_occurred))
         }
     }
 

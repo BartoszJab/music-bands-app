@@ -10,9 +10,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.musicbandsapp.R
 import com.example.musicbandsapp.navigation.Screen
 import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
 import com.example.musicbandsapp.util.Resource
@@ -36,11 +38,14 @@ fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getV
         is Resource.Success -> {
             val scaffoldState = rememberScaffoldState()
 
+            val message = stringResource(R.string.something_went_wrong)
+            val actionLabel = stringResource(R.string.try_again)
+
             if (bandsViewModel.showSnackbar) {
                 LaunchedEffect(scaffoldState.snackbarHostState) {
                     val result = scaffoldState.snackbarHostState.showSnackbar(
-                        message = "Something went wrong",
-                        actionLabel = "Try again"
+                        message = message,
+                        actionLabel = actionLabel
                     )
 
                     when (result) {
@@ -56,7 +61,7 @@ fun MainView(navController: NavController, bandsViewModel: BandsViewModel = getV
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        title = { Text("Bands") },
+                        title = { Text(stringResource(R.string.bands)) },
                         elevation = 10.dp
                     )
                 },

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.musicbandsapp.R
 import com.example.musicbandsapp.model.Reference
 import com.example.musicbandsapp.util.openReference
@@ -21,20 +22,20 @@ fun References(context: Context, reference: Reference) {
         Row {
             Reference(
                 resourceId = R.drawable.apple_music_logo,
-                description = "Apple music",
+                description = stringResource(R.string.apple_music),
                 onClick = { openReference(context, reference.appleMusic ?: "") }
             )
 
             Reference(
                 resourceId = R.drawable.spotify_logo,
-                description = "Spotify",
+                description = stringResource(R.string.spotify),
                 onClick = { openReference(context, reference.spotify ?: "") }
             )
         }
 
         Reference(
             resourceId = R.drawable.yt_logo,
-            description = "Youtube",
+            description = stringResource(R.string.youtube),
             onClick = { openReference(context, reference.youtube ?: "") }
         )
     }

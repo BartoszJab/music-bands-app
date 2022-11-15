@@ -11,11 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.musicbandsapp.R
 import com.example.musicbandsapp.util.Resource
 import com.example.musicbandsapp.view.composable.AlbumsButton
 import com.example.musicbandsapp.view.composable.AlbumsDialog
@@ -63,7 +65,7 @@ fun DetailsView(
                         title = { Text(text = band.name) },
                         navigationIcon = {
                             IconButton(onClick = navController::popBackStack) {
-                                Icon(Icons.Filled.ArrowBack, "Back icon")
+                                Icon(Icons.Filled.ArrowBack, stringResource(R.string.back_icon_description))
                             }
                         },
                         elevation = 10.dp
@@ -78,7 +80,7 @@ fun DetailsView(
                 ) {
                     AsyncCachedImage(
                         model = band.bandImage,
-                        contentDescription = "Band image",
+                        contentDescription = stringResource(R.string.band_image_description),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -86,7 +88,7 @@ fun DetailsView(
                     )
 
                     Text(
-                        "Members",
+                        stringResource(R.string.members),
                         style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
                     )
                     Text(band.members.joinToString(", "))
@@ -96,7 +98,7 @@ fun DetailsView(
                     AlbumsButton { showAlbumsDialog = true }
 
                     Text(
-                        "Reference",
+                        stringResource(R.string.reference),
                         style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
                     )
                     References(context = context, reference = band.reference)

@@ -11,11 +11,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicbandsapp.model.Band
-import com.example.musicbandsapp.ui.theme.MusicBandsAppTheme
 
 @Composable
 fun RowItem(band: Band, modifier: Modifier = Modifier) {
@@ -50,13 +48,5 @@ fun RowItem(band: Band, modifier: Modifier = Modifier) {
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun RowItemPreview() {
-    MusicBandsAppTheme {
-
     }
 }

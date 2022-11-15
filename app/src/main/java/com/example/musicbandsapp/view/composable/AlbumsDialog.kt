@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.musicbandsapp.R
 import com.example.musicbandsapp.model.Album
 
 @Composable
@@ -36,7 +38,7 @@ fun AlbumsDialog(albums: List<Album>, onDismissRequest: () -> Unit) {
                         .background(MaterialTheme.colors.primary)
                 ) {
                     Text(
-                        "Albums",
+                        stringResource(R.string.albums),
                         style = TextStyle(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
@@ -53,11 +55,11 @@ fun AlbumsDialog(albums: List<Album>, onDismissRequest: () -> Unit) {
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
                     Text(
-                        "Name",
+                        stringResource(R.string.name),
                         style = TextStyle(fontSize = 20.sp, fontStyle = FontStyle.Italic),
                     )
                     Text(
-                        "Released",
+                        stringResource(R.string.released),
                         style = TextStyle(fontSize = 20.sp, fontStyle = FontStyle.Italic)
                     )
                 }
@@ -91,7 +93,7 @@ fun AlbumsDialog(albums: List<Album>, onDismissRequest: () -> Unit) {
                         .padding(end = 4.dp)
                 ) {
                     Text(
-                        "Cancel",
+                        stringResource(R.string.cancel),
                         style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     )
                 }
