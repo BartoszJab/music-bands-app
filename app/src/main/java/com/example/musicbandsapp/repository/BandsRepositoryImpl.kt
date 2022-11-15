@@ -15,10 +15,10 @@ class BandsRepositoryImpl(private val bandsService: BandsService, private val co
     private val bandsDao: BandsDao by inject(BandsDao::class.java)
     private val imageLoader: ImageLoader by inject(ImageLoader::class.java)
 
-    override suspend fun getBands(isFromCache: Boolean): Resource<List<Band>> {
+    override suspend fun getBands(isForceReload: Boolean): Resource<List<Band>> {
         val bands = bandsDao.getAll()
 
-        if (bands.isEmpty() || isFromCache) {
+        if (bands.isEmpty() || isForceReload) {
             val remoteBands = bandsService.getBands()
             remoteBands.data?.let {
                 bandsDao.insertAll(it)
