@@ -1,6 +1,7 @@
 package com.example.musicbandsapp.di
 
 import androidx.room.Room
+import coil.ImageLoader
 import com.example.musicbandsapp.api.BandsService
 import com.example.musicbandsapp.db.BandsDatabase
 import com.example.musicbandsapp.repository.BandsRepositoryImpl
@@ -11,6 +12,7 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -24,7 +26,7 @@ val appModule = module {
     }
 
     single {
-        BandsRepositoryImpl(get())
+        BandsRepositoryImpl(get(), androidContext())
     }
 
     single {
@@ -37,6 +39,10 @@ val appModule = module {
     single {
         val database: BandsDatabase = get()
         database.getBandsDao()
+    }
+
+    single {
+        ImageLoader.Builder(androidContext()).crossfade(true).build()
     }
 
     viewModel { BandsViewModel(get()) }
